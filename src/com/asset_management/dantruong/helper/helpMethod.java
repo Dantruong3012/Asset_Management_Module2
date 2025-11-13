@@ -3,16 +3,18 @@ package com.asset_management.dantruong.helper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import com.asset_management.dantruong.loginRegister;
+import com.asset_management.dantruong.trasaction.Asset;
+import com.asset_management.dantruong.user_services.Users;
 
 public class helpMethod {
 
     private static final Scanner sc = new Scanner(System.in);
 
-    public static int readInt(String promt, int min, int max){
+    public  int readInt(String promt, int min, int max){
         while (true) {
             System.out.print(promt);
             try {
@@ -28,12 +30,12 @@ public class helpMethod {
         }
     }
 
-    public static String readString(String prompt){
+    public String readString(String prompt){
         System.out.print(prompt);
         return sc.nextLine().trim();
     }
 
-    public static double readDouble(String prompt, double min){
+    public double readDouble(String prompt, double min){
         while (true) {
             System.out.print(prompt);
         try {
@@ -46,7 +48,7 @@ public class helpMethod {
         }
     }
 
-    public static Date readDate (String prompt){
+    public Date readDate (String prompt){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(false);
         while (true) {
@@ -60,11 +62,12 @@ public class helpMethod {
         }
     }
 
-    public static String readAccountName(String promt, Map<String, String> users){
+    public String readAccountName(String promt, Map<String, Users> users){
+        String AccountName;
         while (true) {
             System.out.print(promt);
             try {
-                String AccountName = sc.nextLine().trim();
+                AccountName = sc.nextLine().trim();
                 if (users.containsKey(AccountName)) {
                 System.out.println("❌ Error: Account '" + AccountName + "' already exists. Please try again.");
                 continue;
@@ -84,7 +87,7 @@ public class helpMethod {
         }
     }
 
-    public static String readAccountPassWord(String prompt){
+    public String readAccountPassWord(String prompt){
         while (true) {
             System.out.print(prompt);
 
@@ -111,5 +114,15 @@ public class helpMethod {
                System.out.println("❌ Error reading password. Please try again.");
             }
         }
+    }
+
+
+    public Asset isExist(String symbol, List<Asset> assetList){
+        if (assetList == null) return null;
+        
+        for (Asset asset : assetList) {
+            if (asset.getSymBol().equals(symbol)) return asset;
+        }
+        return null;
     }
 }
