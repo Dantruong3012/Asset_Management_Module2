@@ -27,7 +27,7 @@ public SalesManager(Portfolio portfolio, helpMethod helper, String currentLoginN
     this.currentLoginName = currentLoginName;
 }
 
-public String getSaleLogPath(){
+public synchronized String getSaleLogPath(){
    File folder = new File(SALE_DATE);
    if (!folder.exists()) {
     folder.mkdirs();
@@ -35,7 +35,7 @@ public String getSaleLogPath(){
    return SALE_DATE + this.currentLoginName + "_saleslog.txt";
 }
 
-public void saveSaleFile(String saleDetail){
+public synchronized void saveSaleFile(String saleDetail){
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(getSaleLogPath(), true))) {
         writer.write(saleDetail);
         writer.newLine();
@@ -46,7 +46,7 @@ public void saveSaleFile(String saleDetail){
 }
 
 
-public void handleSale(){
+public synchronized void handleSale(){
     System.out.println("Hello " + this.currentLoginName +  ", what do you want to sell today!");
     String symbol = helper.readString("please enter the stock/bond code here: ").toUpperCase();
     List<Asset> currnAssetsList = portfolio.getAssetsList();
@@ -87,7 +87,7 @@ public void handleSale(){
         this.portfolio.saveAsset();
     }
 
-public void viewSaleHistory(){
+public synchronized void viewSaleHistory(){
     System.out.println("\n Hello " + this.currentLoginName + ", let's review your achievements! ");
     System.out.println("-------------------------------------------");
     String saleFile =  getSaleLogPath();

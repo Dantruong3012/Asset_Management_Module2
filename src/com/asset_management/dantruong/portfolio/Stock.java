@@ -28,12 +28,12 @@ public class Stock extends Asset {
                "\n  Company Name: " + getCompanyName() +
                "\n  Sector: " + getMajor() +
                "\n  Quantities: " + calculateTotalQuantities() +
-               "\n  Last Transaction Price: " + getLastTransactionPrice() +
-               "\n  Market Price: " + getCurrentMarketPrice() +
-               "\n  Average Price: " + averagePrice() +
-               "\n  Total Cost: " + calculateTotalTransactionValue() +
-               "\n  Market Value: " + totalValueWithMarketPrice() +
-               "\n  Profit/Loss: " + calculateProfitLoss() +
+               "\n  Last Transaction Price: " + String.format("%.2f", getLastTransactionPrice()) +
+               "\n  Market Price: " + String.format("%.2f", getCurrentMarketPrice()) +
+               "\n  Average Price: " + String.format("%.2f", averagePrice()) +
+               "\n  Total Cost: " + String.format("%.2f", calculateTotalTransactionValue()) +
+               "\n  Market Value: " + String.format("%.2f", totalValueWithMarketPrice()) +
+               "\n  Profit/Loss: " + String.format("%.2f", calculateProfitLoss()) +
                "\n---------------------------";
     }
 

@@ -14,6 +14,14 @@ public class helpMethod {
 
     private static final Scanner sc = new Scanner(System.in);
 
+    private static final helpMethod instance = new  helpMethod();
+
+    private helpMethod(){}
+
+    public static helpMethod getInstance(){
+        return instance;
+    }
+    
     public  int readInt(String promt, int min, int max){
         while (true) {
             System.out.print(promt);
@@ -124,5 +132,11 @@ public class helpMethod {
             if (asset.getSymBol().equals(symbol)) return asset;
         }
         return null;
+    }
+
+
+    public void clean(){
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

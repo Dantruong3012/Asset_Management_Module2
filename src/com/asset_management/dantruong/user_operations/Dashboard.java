@@ -1,5 +1,6 @@
 package com.asset_management.dantruong.user_operations;
 import com.asset_management.dantruong.helper.helpMethod;
+import com.asset_management.dantruong.market_simulator.MaketSimulator;
 import com.asset_management.dantruong.portfolio.Portfolio;
 import com.asset_management.dantruong.portfolio.sale.SalesManager;
 import com.asset_management.dantruong.update.updatePrices;
@@ -9,16 +10,21 @@ public class Dashboard {
     private Portfolio myPortfolio;
     private SalesManager salesManager;
     private updatePrices updatePrices;
+    private Thread marketThread;
 
-    public Dashboard(String username, helpMethod helper, Portfolio myPortfolio) {
+    public Dashboard(String username, Portfolio myPortfolio) {
         this.loggedInUsername = username;
-        this.helper = helper;
+        this.helper = helpMethod.getInstance();
         this.myPortfolio = myPortfolio; 
         this.salesManager = new SalesManager(myPortfolio, helper, username);
         this.updatePrices = new updatePrices(helper, myPortfolio, username);
     }
 
     public void showMenu() {
+        MaketSimulator maketSimulator = new MaketSimulator(myPortfolio);
+        marketThread = new Thread(maketSimulator);
+        marketThread.setDaemon(true);
+        marketThread.start();
         System.out.println("\nWhat would you like to do to day?");
         boolean running = true;
         while(running) {
@@ -36,7 +42,7 @@ public class Dashboard {
 
             switch(choice) {
                 case 1:
-                    myPortfolio.diplayPortfolio();
+                    myPortfolio.handleLiveView();
                     break;
                 case 2:
                     myPortfolio.addStockToAsset();
@@ -54,7 +60,12 @@ public class Dashboard {
                 case 6:
                     updatePrices.updateMarketPrice();
                     break;
+
+                case 7:
+                    updatePrices.updateMarketPrice();
+                    break;
                 case 0:
+                    maketSimulator.stopSimulation();
                     System.out.println("Logging out... Goodbye, " + this.loggedInUsername);
                     running = false;
                     break;

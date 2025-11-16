@@ -1,1 +1,4 @@
 Sell Date: [Thu Nov 13 18:06:51 ICT 2025] | Sell: FPT | Quantities: 2 | Price: 60.00 | Profit: -16.00 
+Sell Date: [Sat Nov 15 11:43:56 ICT 2025] | Sell: FPT | Quantities: 30 | Price: 77.86 | Profit: 295.80 
+Sell Date: [Sat Nov 15 11:44:47 ICT 2025] | Sell: VNM | Quantities: 6 | Price: 60.54 | Profit: 92.81 
+Sell Date: [Sat Nov 15 11:48:35 ICT 2025] | Sell: CTCP CHẾ TẠO ĐIỆN CƠ HÀ NỘI | Quantities: 200 | Price: 600.00 | Profit: 100200.00 

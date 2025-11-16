@@ -1,16 +1,15 @@
 package com.asset_management.dantruong.user_services;
 import java.util.Map;
 import java.util.Scanner;
-
 import com.asset_management.dantruong.helper.helpMethod;
 
 public class loginRegister{
     private final helpMethod helper;
-    private final IUserService userService;
+    private final IUserService userServices;
     private static final Scanner sc = new Scanner(System.in);
-    public loginRegister(helpMethod helper, IUserService userService){
-        this.helper = helper;
-        this.userService =userService;
+    public loginRegister(){
+        this.helper = helpMethod.getInstance();
+        this.userServices = userService.getIntanceUserService();
     }
 
     public String diplayOptions() {
@@ -51,7 +50,7 @@ public class loginRegister{
 public void handleRegister(){
 
     System.out.println("\n--- REGISTER AN ACCOUNT ---");
-    Map<String, Users> users = userService.loadUser();
+    Map<String, Users> users = userServices.loadUser();
 
     String userAccount = helper.readAccountName("\nPlease enter your account (6 digits only): ", users);
     
@@ -62,7 +61,7 @@ public void handleRegister(){
     Users nUsers = new Users(userAccount, userPassword, displayName);
     users.put(userAccount, nUsers);
 
-    if (userService.saveUser(users)) {
+    if (userServices.saveUser(users)) {
         System.out.println("\nAccount registration successful. ");
     }else{
         System.out.println("\nThe system is experiencing problems, please try again later.");
@@ -75,7 +74,7 @@ public String handleLogin(){
     String userLogin = sc.nextLine();
     System.out.print("\nEnter password: ");
     String userLoginPassword = sc.nextLine();
-    Map<String, Users> usersLoginInfor = userService.loadUser();
+    Map<String, Users> usersLoginInfor = userServices.loadUser();
     if (!usersLoginInfor.containsKey(userLogin)) {
         System.out.println("\nLogin failed: Username does not exist.");
     }else {

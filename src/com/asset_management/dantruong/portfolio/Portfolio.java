@@ -12,6 +12,8 @@ import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import com.asset_management.dantruong.helper.helpMethod;
 import com.asset_management.dantruong.trasaction.Asset;
 import com.asset_management.dantruong.trasaction.TransactionType;
@@ -20,6 +22,7 @@ public class Portfolio implements Serializable {
     private List<Asset> assetsList;
     private transient helpMethod helper;
     private String currentLoginUser;
+    private Random random = new Random();
 
 public Portfolio(){}
 
@@ -41,7 +44,7 @@ public String getDynamicPath(){
     return PORTFOLIO_DATA_FOLDER +"/"+ this.currentLoginUser.replaceAll("\\s+", "") + "_asset.dat";
 }
 
-public void saveAsset(){
+public synchronized void saveAsset(){
     String userFile = getDynamicPath();
     try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(userFile))) {
         oos.writeObject(assetsList);
@@ -54,7 +57,7 @@ public void saveAsset(){
 
 
 @SuppressWarnings("unchecked")
-public void loadAsset(){
+public synchronized void loadAsset(){
     String userFile = getDynamicPath();
     File myFile = new File(userFile);
     if (myFile.exists()) {
@@ -71,7 +74,7 @@ public void loadAsset(){
 
 
 
-public void diplayPortfolio() {
+public synchronized void diplayPortfolio() {
     if (this.assetsList == null || this.assetsList.isEmpty()) {
         System.out.println("\nYour category is currently empty.");
         return;
@@ -94,7 +97,7 @@ public void diplayPortfolio() {
 }
 
 
-public void addStockToAsset(){
+public synchronized void addStockToAsset(){
     System.out.println("\n----------Please Enter Stock Information----------");
     String stockCode = helper.readString("\nPlease enter the company's stock code: ").toUpperCase();
     Asset existingAsset = helper.isExist(stockCode, assetsList);
@@ -127,7 +130,7 @@ public void addStockToAsset(){
 }
 
 
-public void addBonToAsset(){
+public synchronized void addBonToAsset(){
     System.out.println("\n----------Please Enter Bon Information----------");
     String  bondCode = helper.readString("\nPlease enter the bond code: ").toUpperCase();
     Asset existingBonds = helper.isExist(bondCode, assetsList);
@@ -160,5 +163,56 @@ public void addBonToAsset(){
     }
 }
 
+public synchronized void priceFluctuations(){
+    for (Asset myAssets : assetsList) {
+        if (myAssets instanceof Stock) {
+            double oldPrice = myAssets.getCurrentMarketPrice();
+            double changePercent = (random.nextDouble()-0.5) * 0.13;
+            double newPrice = oldPrice * (1 + changePercent);
+            if (newPrice < 0) {
+                    newPrice = 0; 
+            }
+            newPrice = Math.round(newPrice * 100.0) / 100.0;
+            myAssets.setCurrentMarketPrice(newPrice);
+        }
+    }
+}
+
+public void handleLiveView(){
+    if (this.helper == null) {
+        System.out.println("Error cannot view live market");
+        return;
+    }
+    System.out.println("\n--- LIVE PORTFOLIO VIEW ---");
+    Thread inputListener = new Thread(() -> {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+         System.out.println("Errors!");
+        }
+    });
+    inputListener.start();
+    while (inputListener.isAlive()) {
+            try {
+                helper.clean();
+                System.out.println("--- LIVE PORTFOLIO VIEW (Press (ENTER) to back to the dash bord!) ---");
+                diplayPortfolio();
+                System.out.println("Prices are being updated according to market transactions......");
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
+
+        if (inputListener.isAlive()) {
+            inputListener.interrupt();
+        }
+
+        System.out.println("Saving updated market prices to database...");
+        saveAsset();
+
+        helper.clean();;
+        System.out.println("--- End of live viewing. Return to main menu. ---");
+    }
 
 }
