@@ -1,7 +1,9 @@
 package com.asset_management.dantruong.update;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -29,7 +31,7 @@ public class updatePrices {
             System.out.println("Database does not exist yet, creating database!");
             folder.mkdirs();
         }
-        return UPDATE_HISTORY_PATH + this.userName + "_Updatedlog.txt";
+        return UPDATE_HISTORY_PATH + this.userName.replaceAll("\\s+", "") + "_Updatedlog.txt";
     }
 
     public void savePriceUpdated(String updated) {
@@ -62,8 +64,22 @@ public class updatePrices {
         savePriceUpdated(updatedDetail);
     }
 
-    public void displayUpdatedHistory() {
-
+    public void viewUpdatedHistory() {
+        System.out.println("\n----- UPDATE HISTORY -----");
+        String updatedDataPath = getUpdatePath();
+        File updatedFile = new File(updatedDataPath);
+        if (!updatedFile.exists()) {
+            System.out.println("You haven't updated anything yet!");
+            return;
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(getUpdatePath()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Database error cannot open update history. Please try again later!");
+        }
     }
 
 }

@@ -8,7 +8,7 @@ public class Bonds extends Asset {
     private double interestRate;
     private Date maturityDate;
 
-    public Bonds(double interestRate, Date maturityDate, String companyName, String symBol, double currentPrice) {
+    public Bonds(double interestRate, Date maturityDate, String symBol, String companyName, double currentPrice) {
         super(companyName, symBol, currentPrice);
         this.interestRate = interestRate;
         this.maturityDate = maturityDate;

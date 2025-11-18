@@ -44,8 +44,8 @@ public abstract class Asset implements Serializable {
             totalQuantities += t.getQuantities();
            }else{
                 if (totalQuantities == 0) continue;
-                double avgCostSaleTime = totalCost / totalQuantities;
-                totalCost -= (avgCostSaleTime * t.getQuantities());
+                double avgCostSellTime = totalCost / totalQuantities;
+                totalCost -= (avgCostSellTime * t.getQuantities());
                 totalQuantities -= t.getQuantities();
            }
         }

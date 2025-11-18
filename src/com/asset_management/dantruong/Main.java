@@ -16,9 +16,9 @@ public class Main {
             portfolio.loadAsset();
             Dashboard dashboard = new Dashboard(user, portfolio);
             dashboard.showMenu();
-        }else{
+        } else {
             System.out.println("\nExited the application. Bye! ");
         }
-      
+
     }
 }
