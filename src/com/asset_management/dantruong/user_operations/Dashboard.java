@@ -3,13 +3,13 @@ import com.asset_management.dantruong.FindAnAsset;
 import com.asset_management.dantruong.helper.helpMethod;
 import com.asset_management.dantruong.market_simulator.MaketSimulator;
 import com.asset_management.dantruong.portfolio.Portfolio;
-import com.asset_management.dantruong.portfolio.sale.SalesManager;
+import com.asset_management.dantruong.portfolio.sale.SellManager;
 import com.asset_management.dantruong.update.updatePrices;
 public class Dashboard {
     private String loggedInUsername;
     private helpMethod helper;
     private Portfolio myPortfolio;
-    private SalesManager salesManager;
+    private SellManager salesManager;
     private updatePrices updatePrices;
     private Thread marketThread;
     private FindAnAsset findAnAsset;
@@ -18,10 +18,9 @@ public class Dashboard {
         this.loggedInUsername = username;
         this.helper = helpMethod.getInstance();
         this.myPortfolio = myPortfolio; 
-        this.salesManager = new SalesManager(myPortfolio, helper, username);
+        this.salesManager = new SellManager(myPortfolio, helper, username);
         this.updatePrices = new updatePrices(helper, myPortfolio, username);
-        this.findAnAsset = FindAnAsset.getInstancFindAnAsset();
-
+        this.findAnAsset = new FindAnAsset();
     }
 
     public void showMenu() {
@@ -37,13 +36,14 @@ public class Dashboard {
             System.out.println("2. Add a new Stock.");
             System.out.println("3. Add a new Bond.");
             System.out.println("4. Selling an asset.");
-            System.out.println("5. View sales transaction history.");
+            System.out.println("5. View sell transaction history.");
             System.out.println("6. Update market price for assets.");
             System.out.println("7. View the asset's price update history.");
             System.out.println("8. Find an asset.");
+            System.out.println("9. View Portfolio Summary.");
             System.out.println("0. Logout");
 
-            int choice = helper.readInt("\nYour choice: ", 0, 8);
+            int choice = helper.readInt("\nYour choice: ", 0, 9);
 
             switch(choice) {
                 case 1:
@@ -72,6 +72,9 @@ public class Dashboard {
 
                 case 8:
                     findAnAsset.findingAsset(myPortfolio, this.loggedInUsername);
+                    break;
+                case 9:
+                    myPortfolio.showPortfolioSummary();
                     break;
                 case 0:
                     maketSimulator.stopSimulation();

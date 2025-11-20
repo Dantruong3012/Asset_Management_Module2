@@ -13,7 +13,6 @@ public class Main {
 
         if (user != null) {
             Portfolio portfolio = new Portfolio(helper, user);
-            portfolio.loadAsset();
             Dashboard dashboard = new Dashboard(user, portfolio);
             dashboard.showMenu();
         } else {

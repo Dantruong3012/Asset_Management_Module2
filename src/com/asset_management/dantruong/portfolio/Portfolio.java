@@ -8,13 +8,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import com.asset_management.dantruong.helper.helpMethod;
+import com.asset_management.dantruong.sort_asset.assetBST;
 import com.asset_management.dantruong.trasaction.Asset;
 import com.asset_management.dantruong.trasaction.TransactionType;
 
@@ -31,7 +30,7 @@ public class Portfolio implements Serializable {
     public Portfolio(helpMethod helper, String userName) {
         this.currentLoginUser = userName;
         this.helper = helper;
-        this.assetsList = new ArrayList<>();
+        this.assetsList = initializeAssets();
     }
 
     public List<Asset> getAssetsList() {
@@ -57,41 +56,54 @@ public class Portfolio implements Serializable {
     }
 
     @SuppressWarnings("unchecked")
-    public synchronized void loadAsset() {
+    public synchronized List<Asset> initializeAssets() {
         String userFile = getDynamicPath();
         File myFile = new File(userFile);
         if (myFile.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(myFile))) {
-                this.assetsList = (List<Asset>) ois.readObject();
-                System.out.println("\nList for '" + this.currentLoginUser + "' loaded successfully. Found "
-                        + assetsList.size() + " assets.");
+                List<Asset> loadedList = (List<Asset>) ois.readObject();
+                System.out.println("\n>> Welcome back! " + this.currentLoginUser + ", Loaded " +  loadedList.size() + " assets from database.");
+                return loadedList;
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("\nLoad List Failed Please Check Your Database Again");
             }
         } else {
             System.out.println("\nDatabase not found for '" + this.currentLoginUser + "'. Starting new portfolio.");
         }
+        return new ArrayList<>();
     }
 
-    public synchronized void diplayPortfolio() {
+    public synchronized void diplayPortfolio(boolean isAtoZ) {
         if (this.assetsList == null || this.assetsList.isEmpty()) {
             System.out.println("\nYour category is currently empty.");
             return;
         }
+        
+        assetBST stockTree = new assetBST();
+        assetBST bondTree = new assetBST();
 
-        Map<String, List<Asset>> assetMap = new LinkedHashMap<>();
-
-        for (Asset Assets : assetsList) {
-            assetMap.computeIfAbsent(Assets.getType(), AssetsList -> new ArrayList<>()).add(Assets);
-        }
-
-        for (Map.Entry<String, List<Asset>> entry : assetMap.entrySet()) {
-            System.out.println("\n----------- " + entry.getKey() + " -----------");
-            for (Asset a : entry.getValue()) {
-                System.out.println(a);
+        for (Asset myAsset : assetsList) {
+            if (myAsset instanceof Stock) {
+                stockTree.insert(myAsset);
+            }else{
+                bondTree.insert(myAsset);
             }
-            System.out.println();
         }
+
+        System.out.println("\n=========== STOCKS ===========");
+        if (isAtoZ) {
+            stockTree.printAtoZ();
+        }else{
+            stockTree.printZtoA();
+        }
+
+        System.out.println("\n=========== BONDS ============");
+        if (isAtoZ) {
+            bondTree.printAtoZ();
+            bondTree.printZtoA();
+        }
+
+       
 
     }
 
@@ -184,6 +196,17 @@ public class Portfolio implements Serializable {
             System.out.println("Error cannot view live market");
             return;
         }
+
+        System.out.println("\n--- LIVE PORTFOLIO VIEW SETTINGS ---");
+        System.out.println("Choose sorting order:");
+        System.out.println("1. Sort A-Z (Ascending)");
+        System.out.println("2. Sort Z-A (Descending)");
+        int sortChoice = helper.readInt("Select (1 or 2): ", 1, 2);
+
+        boolean isAtoZ = (sortChoice == 1);
+
+        helper.clean();
+
         System.out.println("\n--- LIVE PORTFOLIO VIEW ---");
         Thread inputListener = new Thread(() -> {
             try {
@@ -196,8 +219,9 @@ public class Portfolio implements Serializable {
         while (inputListener.isAlive()) {
             try {
                 helper.clean();
-                System.out.println("--- LIVE PORTFOLIO VIEW (Press (ENTER) to back to the dash bord!) ---");
-                diplayPortfolio();
+                String sortMode = isAtoZ ? "A-Z" : "Z-A";
+                System.out.println("--- LIVE PORTFOLIO VIEW " + sortMode + " (Press (ENTER) to back to the dash bord!) ---");
+                diplayPortfolio(isAtoZ);
                 System.out.println("Prices are being updated according to market transactions......");
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -215,6 +239,25 @@ public class Portfolio implements Serializable {
         helper.clean();
         ;
         System.out.println("--- End of live viewing. Return to main menu. ---");
+    }
+
+    public void showPortfolioSummary(){
+        double totalMarketValue = 0;
+        double totalInvestmentCapital = 0;
+        if (this.assetsList == null || this.assetsList.isEmpty()) {
+            System.out.println("\nHello " + this.currentLoginUser + ", Your portfolio is empty.");
+        }
+        for (Asset mAsset : assetsList) {
+            totalInvestmentCapital += mAsset.calculateTotalTransactionValue();
+            totalMarketValue += mAsset.totalValueWithMarketPrice();
+        }
+        double netProfit = totalMarketValue - totalInvestmentCapital;
+        System.out.println("\n--- PORTFOLIO SUMMARY ---");
+        System.out.println("Hello " + this.currentLoginUser + "!");
+        System.out.printf("   Total Investment Capital: %.2f\n", totalInvestmentCapital);
+        System.out.printf("   Total Current Market Value: %.2f\n", totalMarketValue);
+        System.out.printf("   Total Profit/Loss: %.2f\n", netProfit);
+        System.out.println("-----------------------------");
     }
 
 }

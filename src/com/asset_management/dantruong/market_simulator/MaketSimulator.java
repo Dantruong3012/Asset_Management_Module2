@@ -19,7 +19,7 @@ public void stopSimulation() {
 public void run(){
     while (running) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(10000);
             if (running) {
                 portfolio.priceFluctuations();
             }

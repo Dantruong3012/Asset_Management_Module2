@@ -4,27 +4,32 @@ import java.util.List;
 
 import com.asset_management.dantruong.helper.helpMethod;
 import com.asset_management.dantruong.portfolio.Portfolio;
+import com.asset_management.dantruong.sort_asset.assetBST;
 import com.asset_management.dantruong.trasaction.Asset;
 
 public class FindAnAsset  {
-    private static final FindAnAsset instance = new  FindAnAsset();
     private static final helpMethod helper = helpMethod.getInstance();
-    private FindAnAsset(){
-       
-    }
-    public static FindAnAsset getInstancFindAnAsset(){
-        return instance;
-    }
+
+    public FindAnAsset(){}
+
     public synchronized void findingAsset(Portfolio portfolio, String currentUserName){
         System.out.println("\n----- Hello " + currentUserName + " What would you like to look for? -----" );
-        String symbol = helper.readString("Can you please enter the stock/bond code you want to search for? ").toUpperCase();
         List<Asset> currenList = portfolio.getAssetsList();
-        Asset assetLockFor = helper.isExist(symbol, currenList);
-        if (assetLockFor == null) {
-            System.out.println("We can't find the asset with code " + symbol + ", could you please check the asset code you just enter, to make sure it's correct?");
-        }else{
-            System.out.println("\nWe found it!");
-            System.out.println(assetLockFor);
+        assetBST assetTree = new assetBST();
+        for (Asset mAsset : currenList) {
+            assetTree.insert(mAsset);
         }
+        String symbol = helper.readString("\nCan you please enter the stock/bond code you want to search for? ")
+                .toUpperCase();
+
+       Asset foundAsset = assetTree.search(symbol);
+
+       if (foundAsset != null) {
+        System.out.println(currentUserName + " We've just found your asset!");
+        System.out.println(foundAsset.toString());
+       }else{
+        System.out.println("\n So sorry " + currentUserName + " we can't find your asset with the code " + symbol);
+       }
+
     }
 }

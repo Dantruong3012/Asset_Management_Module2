@@ -14,14 +14,14 @@ import com.asset_management.dantruong.portfolio.Portfolio;
 import com.asset_management.dantruong.trasaction.Asset;
 import com.asset_management.dantruong.trasaction.TransactionType;
 
-public class SalesManager {
+public class SellManager {
     private static String SALE_DATE = "src/com/asset_management/dantruong/portfolio/data_sale/";
     private Portfolio portfolio;
     private helpMethod helper;
     private String currentLoginName;
 
 
-public SalesManager(Portfolio portfolio, helpMethod helper, String currentLoginName){
+public SellManager(Portfolio portfolio, helpMethod helper, String currentLoginName){
     this.portfolio = portfolio;
     this.helper = helper;
     this.currentLoginName = currentLoginName;
