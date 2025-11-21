@@ -60,7 +60,7 @@ public synchronized void handleSale(){
     
     System.out.println(this.currentLoginName + ", you have " + currentQty + " of " + symbol);
 
-    int qtyToSell = helper.readInt("Enter the number of shares/bonds you want to sell: ", 1, currentQty);
+    int qtyToSell = helper.readInt("Enter the number of stocks/bonds you want to sell: ", 1, currentQty);
     double sellPrice = helper.readDouble("how much do you want to sell for: ", 0);
     Date saleTime = new Date();
 
@@ -73,7 +73,7 @@ public synchronized void handleSale(){
     saveSaleFile(sellDetail);
 
     System.out.println("\n---------------------------------");
-        System.out.println("SUCCESSFUL SALE TRANSACTION");
+        System.out.println("SUCCESSFUL SELL TRANSACTION");
         System.out.printf("Closing profit: %.2f\n", profitLoss);
         System.out.println("Remaining quantity: " + assetToSell.calculateTotalQuantities());
         System.out.println("---------------------------------");
