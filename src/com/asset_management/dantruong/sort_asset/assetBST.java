@@ -4,8 +4,8 @@ import com.asset_management.dantruong.trasaction.Asset;
 
 class AssetNode {
     Asset asset;
-    assetNode left;
-    assetNode right;
+    AssetNode left;
+    AssetNode right;
 
     public AssetNode(Asset asset) {
         this.asset = asset;
@@ -16,7 +16,7 @@ class AssetNode {
 
 
 public class AssetBST {
-    assetNode root;
+    AssetNode root;
 
     public AssetBST(){
         this.root = null;
@@ -26,10 +26,10 @@ public class AssetBST {
         root = insertRec(root, assets);
     }
 
-    public assetNode insertRec(assetNode root, Asset asset){
+    public AssetNode insertRec(AssetNode root, Asset asset){
 
         if (root == null) {
-            return new assetNode(asset);
+            return new AssetNode(asset);
         }
 
        String newSymbol = asset.getSymBol();
@@ -47,7 +47,7 @@ public class AssetBST {
         order(root);
     }
 
-    public void order(assetNode root){
+    public void order(AssetNode root){
         if (root != null) {
             order(root.left);
             System.out.println(root.asset);
@@ -60,7 +60,7 @@ public class AssetBST {
         reverseOrder(root);
     }
 
-    private void reverseOrder(assetNode root) {
+    private void reverseOrder(AssetNode root) {
         if (root != null) {
             reverseOrder(root.right);
             System.out.println(root.asset);
@@ -73,7 +73,7 @@ public class AssetBST {
     }
 
 
-    public Asset searchRec(assetNode root, String symbolToFind){
+    public Asset searchRec(AssetNode root, String symbolToFind){
         if (root == null) {
             return null;
         }
