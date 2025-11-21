@@ -1,4 +1,4 @@
-package com.asset_management.dantruong.portfolio.sale;
+package com.asset_management.dantruong.portfolio.sell;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,7 +32,7 @@ public synchronized String getSaleLogPath(){
    if (!folder.exists()) {
     folder.mkdirs();
    }
-   return SALE_DATE + this.currentLoginName + "_saleslog.txt";
+   return SALE_DATE + this.currentLoginName.replaceAll("\\s+", "").trim() + "_saleslog.txt";
 }
 
 public synchronized void saveSaleFile(String saleDetail){

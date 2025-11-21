@@ -1,1 +1,1 @@
-Update Time [2025-11-19T12:31:24.767067] | Asset Code: VNM | Last Market Price: 69.930000 | New Market Price 70.000000 | Price Fluctuations: 0.07 
+Update Time [2025-11-21T10:56:22.944103] | Asset Code: VNM | Last Market Price: 60.910000 | New Market Price 58.000000 | Price Fluctuations: -2.91 

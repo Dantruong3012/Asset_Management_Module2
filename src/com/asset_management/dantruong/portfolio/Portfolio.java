@@ -16,6 +16,7 @@ import com.asset_management.dantruong.helper.helpMethod;
 import com.asset_management.dantruong.sort_asset.assetBST;
 import com.asset_management.dantruong.trasaction.Asset;
 import com.asset_management.dantruong.trasaction.TransactionType;
+import com.asset_management.dantruong.user_operations.Dashboard;
 
 public class Portfolio implements Serializable {
     private static final String PORTFOLIO_DATA_FOLDER = "src/com/asset_management/dantruong/portfolio/data_buy";
@@ -23,7 +24,6 @@ public class Portfolio implements Serializable {
     private transient helpMethod helper;
     private String currentLoginUser;
     private Random random = new Random();
-
     public Portfolio() {
     }
 
@@ -33,7 +33,7 @@ public class Portfolio implements Serializable {
         this.assetsList = initializeAssets();
     }
 
-    public List<Asset> getAssetsList() {
+    public synchronized List<Asset> getAssetsList() {
         return this.assetsList;
     }
 
@@ -100,6 +100,7 @@ public class Portfolio implements Serializable {
         System.out.println("\n=========== BONDS ============");
         if (isAtoZ) {
             bondTree.printAtoZ();
+        }else{
             bondTree.printZtoA();
         }
 
@@ -197,6 +198,12 @@ public class Portfolio implements Serializable {
             return;
         }
 
+        if (this.assetsList == null || this.assetsList.isEmpty()) {
+            System.out.println("\nSorry " + this.currentLoginUser + ", you currently dont have any asssets!");
+            System.out.println("\nLet's start adding assets to your portfolio.");
+            return; 
+        }
+
         System.out.println("\n--- LIVE PORTFOLIO VIEW SETTINGS ---");
         System.out.println("Choose sorting order:");
         System.out.println("1. Sort A-Z (Ascending)");
@@ -241,7 +248,7 @@ public class Portfolio implements Serializable {
         System.out.println("--- End of live viewing. Return to main menu. ---");
     }
 
-    public void showPortfolioSummary(){
+    public synchronized void showPortfolioSummary(){
         double totalMarketValue = 0;
         double totalInvestmentCapital = 0;
         if (this.assetsList == null || this.assetsList.isEmpty()) {

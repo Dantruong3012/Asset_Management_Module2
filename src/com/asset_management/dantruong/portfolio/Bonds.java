@@ -38,4 +38,14 @@ public class Bonds extends Asset {
                "\n  Profit/Loss: " + String.format("%.2f", calculateProfitLoss()) +
                "\n---------------------------";
     }
+
+public void setInterestRate(double interestRate) {
+    this.interestRate = interestRate;
+}
+
+public void setMaturityDate(Date maturityDate) {
+    this.maturityDate = maturityDate;
+}
+
+    
 }

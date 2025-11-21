@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class userService implements IUserService {
-    private static final String FILE_PATH = "src/com/asset_management/dantruong/user_services/loginInfor_signinInfor/users.dat";
+    private static final String FILE_PATH = "/Users/dantruong/Documents/Code-Module2-Java/asset_management_module2/src/com/asset_management/dantruong/user_services/loginInfor_signinInfor/users.dat";
 
     private static final userService instance = new userService();
 

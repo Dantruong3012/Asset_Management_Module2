@@ -39,7 +39,7 @@ public class loginRegister{
             runing = false;
             break;
         default: 
-                System.out.println("\n⚠️ Invalid selection. Please try again.");
+                System.out.println("\n Invalid selection. Please try again.");
             break;
     }
     
@@ -70,7 +70,7 @@ public void handleRegister(){
 
 public String handleLogin(){
     System.out.println("\n--- LOG IN ---");
-    System.out.print("\nEnter username: ");
+    System.out.print("\nEnter usercode: ");
     String userLogin = sc.nextLine();
     System.out.print("\nEnter password: ");
     String userLoginPassword = sc.nextLine();

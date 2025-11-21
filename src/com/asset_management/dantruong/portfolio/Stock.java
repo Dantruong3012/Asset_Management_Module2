@@ -37,4 +37,10 @@ public class Stock extends Asset {
                "\n---------------------------";
     }
 
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    
+
 }

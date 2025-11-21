@@ -1,9 +1,8 @@
-package com.asset_management.dantruong;
+package com.asset_management.dantruong.portfolio;
 
 import java.util.List;
 
 import com.asset_management.dantruong.helper.helpMethod;
-import com.asset_management.dantruong.portfolio.Portfolio;
 import com.asset_management.dantruong.sort_asset.assetBST;
 import com.asset_management.dantruong.trasaction.Asset;
 
@@ -12,7 +11,7 @@ public class FindAnAsset  {
 
     public FindAnAsset(){}
 
-    public synchronized void findingAsset(Portfolio portfolio, String currentUserName){
+    public synchronized Asset findingAsset(Portfolio portfolio, String currentUserName){
         System.out.println("\n----- Hello " + currentUserName + " What would you like to look for? -----" );
         List<Asset> currenList = portfolio.getAssetsList();
         assetBST assetTree = new assetBST();
@@ -27,9 +26,11 @@ public class FindAnAsset  {
        if (foundAsset != null) {
         System.out.println(currentUserName + " We've just found your asset!");
         System.out.println(foundAsset.toString());
+        return foundAsset;
        }else{
         System.out.println("\n So sorry " + currentUserName + " we can't find your asset with the code " + symbol);
        }
+       return null;
 
     }
 }

@@ -43,9 +43,9 @@ public class updatePrices {
         }
     }
 
-    public void updateMarketPrice() {
+    public synchronized void updateMarketPrice() {
         String symbol = helper
-                .readString("Please enter the code of the stock or bond you want to update the market price: ");
+                .readString("Please enter the code of the stock or bond you want to update the market price: ").toUpperCase();
         List<Asset> currAssetsList = portfolio.getAssetsList();
         Asset assetToUpdate = helper.isExist(symbol, currAssetsList);
         if (assetToUpdate == null) {
