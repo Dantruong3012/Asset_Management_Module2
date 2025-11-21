@@ -1,38 +1,38 @@
 package com.asset_management.dantruong.user_operations;
-import com.asset_management.dantruong.edit_company_infor.EditAssetInfor;
-import com.asset_management.dantruong.helper.helpMethod;
-import com.asset_management.dantruong.market_simulator.MaketSimulator;
+import com.asset_management.dantruong.edit_company_infor.AssetEditor;
+import com.asset_management.dantruong.helper.HelpMethod;
+import com.asset_management.dantruong.market_simulator.MarketSimulator;
 import com.asset_management.dantruong.portfolio.FindAnAsset;
 import com.asset_management.dantruong.portfolio.Portfolio;
 import com.asset_management.dantruong.portfolio.sell.SellManager;
-import com.asset_management.dantruong.sort_asset.assetBST;
-import com.asset_management.dantruong.update.updatePrices;
+import com.asset_management.dantruong.sort_asset.AssetBST;
+import com.asset_management.dantruong.update.PriceUpdater;
 public class Dashboard {
     private String loggedInUsername;
-    private helpMethod helper;
+    private HelpMethod helper;
     private Portfolio myPortfolio;
     private SellManager salesManager;
-    private updatePrices updatePrices;
+    private PriceUpdater updatePrices;
     private Thread marketThread;
     private FindAnAsset findAnAsset;
-    private EditAssetInfor editer;
-    private assetBST treeAssetBST;
+    private AssetEditor editer;
+    private AssetBST treeAssetBST;
 
     public Dashboard(){}
 
     public Dashboard(String username, Portfolio myPortfolio) {
         this.loggedInUsername = username;
-        this.helper = helpMethod.getInstance();
+        this.helper = HelpMethod.getInstance();
         this.myPortfolio = myPortfolio; 
         this.salesManager = new SellManager(myPortfolio, helper, username);
-        this.updatePrices = new updatePrices(helper, myPortfolio, username);
-        this.findAnAsset = new FindAnAsset();
-        this.treeAssetBST = new assetBST();
-        this.editer = new EditAssetInfor(helper, myPortfolio, this.treeAssetBST, username);
+        this.updatePrices = new PriceUpdater(helper, myPortfolio, username);
+        this.findAnAsset = new FindAnAsset(myPortfolio);
+        this.treeAssetBST = new AssetBST();
+        this.editer = new AssetEditor(helper, myPortfolio, this.treeAssetBST, username);
     }
 
     public void showMenu() {
-        MaketSimulator maketSimulator = new MaketSimulator(myPortfolio);
+        MarketSimulator maketSimulator = new MarketSimulator(myPortfolio);
         marketThread = new Thread(maketSimulator);
         marketThread.setDaemon(true);
         marketThread.start();
@@ -80,7 +80,7 @@ public class Dashboard {
                     break;
 
                 case 8:
-                    findAnAsset.findingAsset(myPortfolio, this.loggedInUsername);
+                    findAnAsset.findingAsset(this.loggedInUsername);
                     break;
                 case 9:
                     myPortfolio.showPortfolioSummary();

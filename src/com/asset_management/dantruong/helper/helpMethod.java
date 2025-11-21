@@ -10,15 +10,15 @@ import java.util.Scanner;
 import com.asset_management.dantruong.trasaction.Asset;
 import com.asset_management.dantruong.user_services.Users;
 
-public class helpMethod {
+public class HelpMethod {
 
     private static final Scanner sc = new Scanner(System.in);
 
-    private static final helpMethod instance = new  helpMethod();
+    private static final HelpMethod instance = new  HelpMethod();
 
-    private helpMethod(){}
+    private HelpMethod(){}
 
-    public static helpMethod getInstance(){
+    public static HelpMethod getInstance(){
         return instance;
     }
     

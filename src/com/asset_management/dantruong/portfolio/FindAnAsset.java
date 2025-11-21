@@ -2,19 +2,21 @@ package com.asset_management.dantruong.portfolio;
 
 import java.util.List;
 
-import com.asset_management.dantruong.helper.helpMethod;
-import com.asset_management.dantruong.sort_asset.assetBST;
+import com.asset_management.dantruong.helper.HelpMethod;
+import com.asset_management.dantruong.sort_asset.AssetBST;
 import com.asset_management.dantruong.trasaction.Asset;
 
 public class FindAnAsset  {
-    private static final helpMethod helper = helpMethod.getInstance();
+    private static final HelpMethod helper = HelpMethod.getInstance();
+    private Portfolio portfolio;
+    public FindAnAsset(Portfolio portfolio){
+        this.portfolio = portfolio;
+    }
 
-    public FindAnAsset(){}
-
-    public synchronized Asset findingAsset(Portfolio portfolio, String currentUserName){
+    public synchronized Asset findingAsset(String currentUserName){
         System.out.println("\n----- Hello " + currentUserName + " What would you like to look for? -----" );
         List<Asset> currenList = portfolio.getAssetsList();
-        assetBST assetTree = new assetBST();
+        AssetBST assetTree = new AssetBST();
         for (Asset mAsset : currenList) {
             assetTree.insert(mAsset);
         }

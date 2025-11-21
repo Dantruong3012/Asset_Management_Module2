@@ -9,17 +9,17 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.asset_management.dantruong.helper.helpMethod;
+import com.asset_management.dantruong.helper.HelpMethod;
 import com.asset_management.dantruong.portfolio.Portfolio;
 import com.asset_management.dantruong.trasaction.Asset;
 
-public class updatePrices {
-    private helpMethod helper;
+public class PriceUpdater {
+    private HelpMethod helper;
     private Portfolio portfolio;
     private String userName;
     private static final String UPDATE_HISTORY_PATH = "src/com/asset_management/dantruong/update/asset_updated_history/";
 
-    public updatePrices(helpMethod helper, Portfolio portfolio, String userName) {
+    public PriceUpdater(HelpMethod helper, Portfolio portfolio, String userName) {
         this.helper = helper;
         this.portfolio = portfolio;
         this.userName = userName;

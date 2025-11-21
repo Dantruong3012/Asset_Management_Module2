@@ -3,21 +3,21 @@ package com.asset_management.dantruong.edit_company_infor;
 import java.util.Date; 
 import java.util.List;
 
-import com.asset_management.dantruong.helper.helpMethod;
+import com.asset_management.dantruong.helper.HelpMethod;
 import com.asset_management.dantruong.portfolio.Portfolio;
 import com.asset_management.dantruong.portfolio.Stock;
-import com.asset_management.dantruong.sort_asset.assetBST;
+import com.asset_management.dantruong.sort_asset.AssetBST;
 import com.asset_management.dantruong.portfolio.Bonds; 
 import com.asset_management.dantruong.trasaction.Asset;
 
-public class EditAssetInfor {
+public class AssetEditor {
 
     private Portfolio portfolio;
-    private assetBST tree;
-    private helpMethod helper;
+    private AssetBST tree;
+    private HelpMethod helper;
 
     
-    public EditAssetInfor(helpMethod helper, Portfolio portfolio, assetBST tree, String userName) {
+    public AssetEditor(HelpMethod helper, Portfolio portfolio, AssetBST tree, String userName) {
         this.helper = helper;
         this.portfolio = portfolio;
         this.tree = tree;

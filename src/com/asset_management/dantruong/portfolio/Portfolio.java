@@ -9,32 +9,33 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import com.asset_management.dantruong.helper.helpMethod;
-import com.asset_management.dantruong.sort_asset.assetBST;
+import com.asset_management.dantruong.helper.HelpMethod;
+import com.asset_management.dantruong.sort_asset.AssetBST;
 import com.asset_management.dantruong.trasaction.Asset;
 import com.asset_management.dantruong.trasaction.TransactionType;
-import com.asset_management.dantruong.user_operations.Dashboard;
 
 public class Portfolio implements Serializable {
     private static final String PORTFOLIO_DATA_FOLDER = "src/com/asset_management/dantruong/portfolio/data_buy";
     private List<Asset> assetsList;
-    private transient helpMethod helper;
+    private transient HelpMethod helper;
     private String currentLoginUser;
     private Random random = new Random();
     public Portfolio() {
     }
 
-    public Portfolio(helpMethod helper, String userName) {
+    public Portfolio(HelpMethod helper, String userName) {
         this.currentLoginUser = userName;
         this.helper = helper;
         this.assetsList = initializeAssets();
     }
 
     public synchronized List<Asset> getAssetsList() {
-        return this.assetsList;
+        // Các lớp khác chỉ được ĐỌC, muốn sửa phải gọi hàm của Portfolio
+        return Collections.unmodifiableList(this.assetsList);
     }
 
     public String getDynamicPath() {
@@ -79,8 +80,8 @@ public class Portfolio implements Serializable {
             return;
         }
         
-        assetBST stockTree = new assetBST();
-        assetBST bondTree = new assetBST();
+        AssetBST stockTree = new AssetBST();
+        AssetBST bondTree = new AssetBST();
 
         for (Asset myAsset : assetsList) {
             if (myAsset instanceof Stock) {
@@ -265,6 +266,11 @@ public class Portfolio implements Serializable {
         System.out.printf("   Total Current Market Value: %.2f\n", totalMarketValue);
         System.out.printf("   Total Profit/Loss: %.2f\n", netProfit);
         System.out.println("-----------------------------");
+    }
+
+
+    public synchronized void removeAsset(Asset removeAsset){
+        assetsList.remove(removeAsset);
     }
 
 }

@@ -1,14 +1,14 @@
 package com.asset_management.dantruong;
 
-import com.asset_management.dantruong.helper.helpMethod;
+import com.asset_management.dantruong.helper.HelpMethod;
 import com.asset_management.dantruong.portfolio.Portfolio;
 import com.asset_management.dantruong.user_operations.Dashboard;
-import com.asset_management.dantruong.user_services.loginRegister;
+import com.asset_management.dantruong.user_services.AuthService;
 
 public class Main {
     public static void main(String[] args) {
-        helpMethod helper = helpMethod.getInstance();
-        loginRegister loginRegister = new loginRegister();
+        HelpMethod helper = HelpMethod.getInstance();
+        AuthService loginRegister = new AuthService();
         String user = loginRegister.diplayOptions();
 
         if (user != null) {

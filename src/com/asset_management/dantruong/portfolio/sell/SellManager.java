@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import com.asset_management.dantruong.helper.helpMethod;
+import com.asset_management.dantruong.helper.HelpMethod;
 import com.asset_management.dantruong.portfolio.Portfolio;
 import com.asset_management.dantruong.trasaction.Asset;
 import com.asset_management.dantruong.trasaction.TransactionType;
@@ -17,11 +17,11 @@ import com.asset_management.dantruong.trasaction.TransactionType;
 public class SellManager {
     private static String SALE_DATE = "src/com/asset_management/dantruong/portfolio/data_sale/";
     private Portfolio portfolio;
-    private helpMethod helper;
+    private HelpMethod helper;
     private String currentLoginName;
 
 
-public SellManager(Portfolio portfolio, helpMethod helper, String currentLoginName){
+public SellManager(Portfolio portfolio, HelpMethod helper, String currentLoginName){
     this.portfolio = portfolio;
     this.helper = helper;
     this.currentLoginName = currentLoginName;
@@ -79,7 +79,7 @@ public synchronized void handleSale(){
         System.out.println("---------------------------------");
 
         if (assetToSell.calculateTotalQuantities() == 0) {
-            currnAssetsList.remove(assetToSell);
+            this.portfolio.removeAsset(assetToSell);
             System.out.println(symbol + " has been removed from your portfolio.");
         }else{
             assetToSell.setCurrentMarketPrice(sellPrice);

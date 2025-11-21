@@ -2,11 +2,11 @@ package com.asset_management.dantruong.market_simulator;
 
 import com.asset_management.dantruong.portfolio.Portfolio;
 
-public class MaketSimulator implements Runnable {
+public class MarketSimulator implements Runnable {
     private Portfolio portfolio;
     private volatile boolean running = true;
 
-public MaketSimulator(Portfolio portfolio){
+public MarketSimulator(Portfolio portfolio){
     this.portfolio = portfolio;
 }
 

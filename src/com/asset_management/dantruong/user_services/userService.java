@@ -10,14 +10,14 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class userService implements IUserService {
+public class UserService implements IUserService {
     private static final String FILE_PATH = "/Users/dantruong/Documents/Code-Module2-Java/asset_management_module2/src/com/asset_management/dantruong/user_services/loginInfor_signinInfor/users.dat";
 
-    private static final userService instance = new userService();
+    private static final UserService instance = new UserService();
 
-    private userService(){}
+    private UserService(){}
 
-    public static userService getIntanceUserService(){
+    public static UserService getIntanceUserService(){
         return instance;
     }
 

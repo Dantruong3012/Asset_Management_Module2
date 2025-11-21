@@ -1,15 +1,15 @@
 package com.asset_management.dantruong.user_services;
 import java.util.Map;
 import java.util.Scanner;
-import com.asset_management.dantruong.helper.helpMethod;
+import com.asset_management.dantruong.helper.HelpMethod;
 
-public class loginRegister{
-    private final helpMethod helper;
+public class AuthService{
+    private final HelpMethod helper;
     private final IUserService userServices;
     private static final Scanner sc = new Scanner(System.in);
-    public loginRegister(){
-        this.helper = helpMethod.getInstance();
-        this.userServices = userService.getIntanceUserService();
+    public AuthService(){
+        this.helper = HelpMethod.getInstance();
+        this.userServices = UserService.getIntanceUserService();
     }
 
     public String diplayOptions() {

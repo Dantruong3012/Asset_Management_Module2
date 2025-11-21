@@ -2,12 +2,12 @@ package com.asset_management.dantruong.sort_asset;
 
 import com.asset_management.dantruong.trasaction.Asset;
 
-class assetNode {
+class AssetNode {
     Asset asset;
     assetNode left;
     assetNode right;
 
-    public assetNode(Asset asset) {
+    public AssetNode(Asset asset) {
         this.asset = asset;
         this.left = null;
         this.right = null;
@@ -15,10 +15,10 @@ class assetNode {
 }
 
 
-public class assetBST {
+public class AssetBST {
     assetNode root;
 
-    public assetBST(){
+    public AssetBST(){
         this.root = null;
     }
 

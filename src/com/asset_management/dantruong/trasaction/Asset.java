@@ -23,7 +23,7 @@ public abstract class Asset implements Serializable {
         this.transaction.add(new TransactionHistory(TYPE, quantities, transactionPrice, date));
     }
 
-    public int calculateTotalQuantities() {
+    public synchronized int calculateTotalQuantities() {
         int total = 0;
         for (TransactionHistory t : transaction) {
             if (t.getType() == TransactionType.BUY) {
@@ -60,7 +60,7 @@ public abstract class Asset implements Serializable {
         return transaction.get(transaction.size() - 1).getTransactionPrice();
     }
 
-    public double averagePrice() {
+    public synchronized double averagePrice() {
         int totalQuantities = calculateTotalQuantities();
         if (totalQuantities == 0)
             return 0;
