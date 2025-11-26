@@ -27,13 +27,9 @@ public class UserService implements IUserService {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
             return (Map<String, Users>) ois.readObject();
         } catch (FileNotFoundException | EOFException e) {
-            // Đây là trường hợp QUAN TRỌNG:
-            // File chưa tồn tại (lần chạy đầu tiên) hoặc file rỗng.
-            // Chúng ta trả về một HashMap rỗng để chương trình bắt đầu.
             return new HashMap<>();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Fatal error while reading 'database': " + e.getMessage());
-            // Trong trường hợp lỗi, trả về Map rỗng để tránh sập chương trình
             return new HashMap<>();
         }
     }

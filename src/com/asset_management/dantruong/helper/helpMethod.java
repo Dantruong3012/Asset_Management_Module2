@@ -40,7 +40,11 @@ public class HelpMethod {
 
     public String readString(String prompt){
         System.out.print(prompt);
-        return sc.nextLine().trim();
+        String input = sc.nextLine().trim();
+        if (input == null) {
+            System.out.println("You haven't input anythings!");
+        }
+        return input;
     }
 
     public double readDouble(String prompt, double min){

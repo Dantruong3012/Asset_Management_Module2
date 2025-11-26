@@ -1,2 +1,0 @@
-Sell Date: [Fri Nov 21 15:20:56 ICT 2025] | Sell: VNM | Quantities: 15 | Price: 150.00 | Profit: 1350.00 
-Sell Date: [Fri Nov 21 15:23:22 ICT 2025] | Sell: VHM121025 | Quantities: 30 | Price: 150.00 | Profit: 1590.00 
